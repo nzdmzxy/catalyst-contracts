@@ -1,5 +1,5 @@
 {
-  "name": "catalyst-contracts",
+  "name": "@dcl/catalyst-contracts",
   "description": "Contracts",
   "version": "0.1.0",
   "main": "dist/index.js",
