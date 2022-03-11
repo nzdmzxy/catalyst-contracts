@@ -1,6 +1,6 @@
 # Catalyst Contracts
 
-A set of utilities for Catalyst nodes related to blockchain operations
+A set of utilities for Catalyst nodes, related to interacting with the DAO
 
 ## Contributing
 
