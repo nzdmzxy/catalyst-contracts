@@ -6,7 +6,7 @@ on:
     types:
       - created
 
-name: CI
+name: Relase
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,9 +17,11 @@ jobs:
         with:
           node-version: 14.x
       - name: install
-        run:  yarn install
+        run:  yarn install --frozen-lockfile
       - name: build
         run:  yarn build
+      - name: test
+        run:  yarn test
       - name: Publish
         uses: menduz/oddish-action@master
         with:
