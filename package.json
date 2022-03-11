@@ -13,6 +13,10 @@
     "lint:fix": "eslint '**/*.{js,ts}' --fix",
     "lint:check": "eslint '**/*.{js,ts}'"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/decentraland/catalyst-contracts.git"
+  },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [
       "eslint --fix"
