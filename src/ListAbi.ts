@@ -1,5 +1,21 @@
-import { ContractAbi } from 'web3x/contract'
-export default new ContractAbi([
+import { AbiItem, BigNumber } from 'eth-connect'
+
+export const poiDeployments = {
+  '3' /* ropsten */: '0x5DC4a5C214f2161F0D5595a6dDd9352409aE3Ab4',
+  '1' /* mainnet */: '0x0ef15a1c7a49429a36cb46d4da8c53119242b54e'
+} as const
+
+export const denylistNamesDeployments = {
+  '3' /* ropsten */: '0x20c6f1e86eba703a14414a0cbc1b55c89dba7a0f',
+  '1' /* mainnet */: '0x0c4c90a4f29872a2e9ef4c4be3d419792bca9a36'
+} as const
+
+export type ListContract = {
+  size(): Promise<BigNumber>
+  get(input: BigNumber | number | string): Promise<string>
+}
+
+export const listAbiItems: AbiItem[] = [
   {
     constant: true,
     inputs: [],
@@ -446,4 +462,4 @@ export default new ContractAbi([
     name: 'RecoverToVault',
     type: 'event'
   }
-])
+]

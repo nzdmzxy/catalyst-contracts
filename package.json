@@ -1,7 +1,7 @@
 {
   "name": "@dcl/catalyst-contracts",
   "description": "Contracts",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Decentraland Contributors",
@@ -9,16 +9,16 @@
   "scripts": {
     "cleanup": "shx rm -rf dist node_modules",
     "build": "tsc -b",
-    "test": "echo No tests to run!",
-    "lint:fix": "eslint '**/*.{js,ts}' --fix",
-    "lint:check": "eslint '**/*.{js,ts}'"
+    "test": "jest --forceExit --detectOpenHandles --coverage --verbose",
+    "lint:fix": "eslint '**/*.ts' --fix",
+    "lint:check": "eslint '**/*.ts'"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/decentraland/catalyst-contracts.git"
   },
   "lint-staged": {
-    "**/*.{js,ts,tsx}": [
+    "**/*.{ts,tsx}": [
       "eslint --fix"
     ]
   },
@@ -29,22 +29,17 @@
     "trailingComma": "none"
   },
   "dependencies": {
-    "bn.js": "5.2.0",
-    "dcl-crypto": "2.3.0",
-    "web3x": "4.0.6"
+    "eth-connect": "^6.0.2"
   },
   "devDependencies": {
-    "@types/bn.js": "^5",
+    "@dcl/eslint-config": "^1.0.3",
+    "@types/jest": "^27.5.1",
     "@types/node": "16.7.10",
-    "@typescript-eslint/eslint-plugin": "4.33.0",
-    "@typescript-eslint/parser": "4.33.0",
-    "eslint": "7.32.0",
-    "eslint-config-prettier": "8.3.0",
-    "eslint-plugin-prettier": "4.0.0",
+    "isomorphic-fetch": "^3.0.0",
+    "jest": "^28.1.0",
     "lint-staged": "12.1.4",
-    "prettier": "2.4.1",
+    "ts-jest": "^28.0.3",
     "ts-node": "10.2.1",
-    "ts-path-mapping": "0.1.4",
     "typescript": "^4.4.3"
   },
   "files": [

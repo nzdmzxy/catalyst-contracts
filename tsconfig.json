@@ -14,14 +14,10 @@
     "incremental": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": true,
-    "jsx": "react",
     "skipLibCheck": true,
     "outDir": "./dist",
     "lib": [
       "es2020",
-      "dom",
-      "esnext.asynciterable",
-      "esnext"
     ]
   },
   "include": [

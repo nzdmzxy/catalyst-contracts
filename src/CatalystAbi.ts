@@ -1,5 +1,23 @@
-import { ContractAbi } from 'web3x/contract'
-export default new ContractAbi([
+import { AbiItem, BigNumber } from 'eth-connect'
+
+export const catalystDeployments = {
+  '3' /* ropsten */: '0xadd085f2318e9678bbb18b3e0711328f902b374b',
+  '1' /* mainnet */: '0x4a2f10076101650f40342885b99b6b101d83c486'
+} as const
+
+export type CatalystByIdResult = {
+  id: Uint8Array
+  owner: string
+  domain: string
+}
+
+export type CatalystContract = {
+  catalystCount(): Promise<BigNumber>
+  catalystIds(input: BigNumber | string | number): Promise<Uint8Array>
+  catalystById(id: Uint8Array): Promise<CatalystByIdResult>
+}
+
+export const catalystAbiItems: AbiItem[] = [
   {
     constant: true,
     inputs: [
@@ -488,4 +506,4 @@ export default new ContractAbi([
     name: 'RecoverToVault',
     type: 'event'
   }
-])
+]

@@ -1,69 +1,63 @@
-import { Address } from 'web3x/address'
-import { Eth } from 'web3x/eth'
-import { HttpProvider } from 'web3x/providers'
-import { Catalyst } from './Catalyst'
-import { List } from './List'
+import RequestManager, { ContractFactory } from 'eth-connect'
+import {
+  CatalystContract,
+  catalystDeployments,
+  catalystAbiItems
+} from './CatalystAbi'
+import {
+  listAbiItems,
+  denylistNamesDeployments,
+  ListContract,
+  poiDeployments
+} from './ListAbi'
 
-export const networks = {
-  ropsten: {
-    wss: 'wss://ropsten.infura.io/ws/v3/65b4470058624aa493c1944328b19ec0',
-    http: 'https://ropsten.infura.io/v3/65b4470058624aa493c1944328b19ec0',
-    contracts: {
-      catalyst: {
-        address: '0xadd085f2318e9678bbb18b3e0711328f902b374b',
-        class: Catalyst
-      },
-      POIs: {
-        address: '0x5DC4a5C214f2161F0D5595a6dDd9352409aE3Ab4',
-        class: List
-      },
-      denylistedNames: {
-        address: '0x20c6f1e86eba703a14414a0cbc1b55c89dba7a0f',
-        class: List
-      }
-    }
-  },
-  mainnet: {
-    wss: 'wss://mainnet.infura.io/ws/v3/65b4470058624aa493c1944328b19ec0',
-    http: 'https://mainnet.infura.io/v3/65b4470058624aa493c1944328b19ec0',
-    contracts: {
-      catalyst: {
-        address: '0x4a2f10076101650f40342885b99b6b101d83c486',
-        class: Catalyst
-      },
-      POIs: {
-        address: '0x0ef15a1c7a49429a36cb46d4da8c53119242b54e',
-        class: List
-      },
-      denylistedNames: {
-        address: '0x0c4c90a4f29872a2e9ef4c4be3d419792bca9a36',
-        class: List
-      }
-    }
-  }
+// eslint-disable-next-line
+export async function nameDenylistForProvider(ethereumProvider: any): Promise<ListContract> {
+  const rm = new RequestManager(ethereumProvider)
+  const networkId = (await rm.net_version()).toString()
+
+  if (!(networkId in denylistNamesDeployments))
+    throw new Error(
+      `There is no deployed NameDenylist contract for networkId=${networkId}`
+    )
+
+  const contractAddress = denylistNamesDeployments[networkId]
+
+  return (await new ContractFactory(rm, listAbiItems).at(
+    contractAddress
+  )) as any as ListContract
 }
 
-export function handlerForNetwork(networkKey: string, contractKey: string) {
-  try {
-    const provider = httpProviderForNetwork(networkKey)
-    const eth = new Eth(provider)
-    const network = networks[networkKey]
-    const contract = network.contracts[contractKey]
-    const address = Address.fromString(contract.address)
-    const contractInstance = new contract.class(eth, address)
+// eslint-disable-next-line
+export async function poiListForProvider(ethereumProvider: any): Promise<ListContract> {
+  const rm = new RequestManager(ethereumProvider)
+  const networkId = (await rm.net_version()).toString()
 
-    return {
-      provider,
-      network,
-      contract: contractInstance
-    }
-  } catch (error) {
-    return undefined
-  }
+  if (!(networkId in poiDeployments))
+    throw new Error(
+      `There is no deployed PoiDenylist contract for networkId=${networkId}`
+    )
+
+  const contractAddress = poiDeployments[networkId]
+
+  return (await new ContractFactory(rm, listAbiItems).at(
+    contractAddress
+  )) as any as ListContract
 }
 
-export function httpProviderForNetwork(networkKey: string) {
-  const network = networks[networkKey]
-  const url = network.http
-  return new HttpProvider(url)
+// eslint-disable-next-line
+export async function catalystRegistryForProvider(ethereumProvider: any): Promise<CatalystContract> {
+  const rm = new RequestManager(ethereumProvider)
+  const networkId = (await rm.net_version()).toString()
+
+  if (!(networkId in catalystDeployments))
+    throw new Error(
+      `There is no deployed CatalystProxy contract for networkId=${networkId}`
+    )
+
+  const contractAddress = catalystDeployments[networkId]
+
+  return (await new ContractFactory(rm, catalystAbiItems).at(
+    contractAddress
+  )) as any as CatalystContract
 }
