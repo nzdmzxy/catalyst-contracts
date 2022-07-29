@@ -7,12 +7,12 @@ describe('all tests', () => {
   const mainnetProvider = new WebSocketProvider('wss://rpc.decentraland.org/mainnet?project=catalyst-contracts-ci', { WebSocketConstructor: WebSocket })
   mainnetProvider.debug = true
 
-  const ropstenProvider = new WebSocketProvider('wss://rpc.decentraland.org/ropsten?project=catalyst-contracts-ci', { WebSocketConstructor: WebSocket })
-  ropstenProvider.debug = true
+  const goerliProvider = new WebSocketProvider('wss://rpc.decentraland.org/goerli?project=catalyst-contracts-ci', { WebSocketConstructor: WebSocket })
+  goerliProvider.debug = true
 
   afterAll(() => {
     mainnetProvider.dispose()
-    ropstenProvider.dispose()
+    goerliProvider.dispose()
   })
 
   describe('server list', () => {
@@ -28,8 +28,8 @@ describe('all tests', () => {
       expect(data).toMatchObject({ owner: "0x75e1d32289679dfcB2F01fBc0e043B3d7F9Cd443", domain: "interconnected.online" })
     })
 
-    it('ropsten', async () => {
-      const contract = await catalystRegistryForProvider(ropstenProvider)
+    it('goerli', async () => {
+      const contract = await catalystRegistryForProvider(goerliProvider)
       const count = (await contract.catalystCount()).toNumber()
       expect(count).toBeGreaterThan(0)
     })
@@ -42,8 +42,8 @@ describe('all tests', () => {
       expect(count).toBeGreaterThan(0)
     })
 
-    it('ropsten', async () => {
-      const contract = await poiListForProvider(ropstenProvider)
+    it('goerli', async () => {
+      const contract = await poiListForProvider(goerliProvider)
       const count = (await contract.size()).toNumber()
       expect(count).toBeGreaterThan(0)
     })
@@ -59,8 +59,8 @@ describe('all tests', () => {
       expect(first.length).toBeGreaterThan(0)
     })
 
-    it('ropsten', async () => {
-      const contract = await nameDenylistForProvider(ropstenProvider)
+    it('goerli', async () => {
+      const contract = await nameDenylistForProvider(goerliProvider)
       const count = (await contract.size()).toNumber()
       expect(count).toBeGreaterThan(0)
     })
@@ -76,8 +76,8 @@ describe('all tests', () => {
       expect(typeof servers[0].domain).toEqual('string')
     })
 
-    it('loads the catalysts from ropsten', async () => {
-      const servers = await getAllCatalystFromProvider(ropstenProvider)
+    it('loads the catalysts from goerli', async () => {
+      const servers = await getAllCatalystFromProvider(goerliProvider)
       expect(servers.length).toBeGreaterThan(0)
       expect(servers[0].id instanceof Uint8Array).toEqual(true)
       expect(typeof servers[0].owner).toEqual('string')
