@@ -3,7 +3,8 @@ import { AbiItem, BigNumber } from 'eth-connect'
 export const catalystDeployments = {
   '5' /* goerli  */: '0x380e46851c47b73b6aa9bea50cf3b50e2cf637cf',
   '3' /* ropsten */: '0xadd085f2318e9678bbb18b3e0711328f902b374b',
-  '1' /* mainnet */: '0x4a2f10076101650f40342885b99b6b101d83c486'
+  '1' /* mainnet */: '0x4a2f10076101650f40342885b99b6b101d83c486',
+  '179' /* abey */: '0x043678b2Da93f8DF86DB432ECbCe392793fE4025'
 } as const
 
 export type CatalystByIdResult = {
